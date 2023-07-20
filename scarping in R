@@ -1,0 +1,22 @@
+library(rvest)
+
+# Specify the URL of the mobiles page
+url <- "https://priceoye.pk/mobiles/pricelist?sort=price_asc&brands=oppo_samsung_infinix_apple"
+# Read the HTML content of the webpage
+page <- read_html(url)
+
+# Extract mobile names and prices using CSS selectors
+mobile_names <- page %>% html_nodes(".p-title.bold.h5") %>% html_text()
+mobile_prices <- page %>% html_nodes(".price-box.p1") %>% html_text()
+print(mobile_list)
+mobile_names <- trimws(mobile_names)
+mobile_prices <- trimws(mobile_prices)
+# Create a data frame with the extracted data
+mobile_data <- data.frame(Mobile_Name = mobile_names, Price = mobile_prices)
+
+# Print the scraped data
+print(mobile_data)
+
+ggplot(mobile_data,aes(x=mobile_names,y=mobile_prices))+geom_col()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 0.5))+
+  (labs(x = "Mobile Names", y = "Mobile Prices", title = "Oppo Mobile Prices graph learn with zuhaib hussain butt")
